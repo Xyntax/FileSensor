@@ -2,19 +2,20 @@
 #  -*- coding: utf-8 -*-
 
 import scrapy
-import requests
 import urlparse
 import re
 from lib.data import spider_conf
+from lib.common import gen_urls
 
 
 class FileSensorSpider(scrapy.Spider):
     name = 'filesensor'
+    handle_httpstatus_list = [301, 302, 204, 206, 403, 500]
 
-    def __init__(self, **kw):
-        super(FileSensorSpider, self).__init__(**kw)
+    def __init__(self):
+        super(FileSensorSpider, self).__init__()
         self.url = spider_conf.start_urls
-        print(self.url)
+        print('[START] ' + self.url)
         if not self.url.startswith('http://') and not self.url.startswith('https://'):
             self.url = 'http://%s/' % self.url
         self.allowed_domains = [re.sub(r'^www\.', '', urlparse.urlparse(self.url).hostname)]
@@ -24,28 +25,22 @@ class FileSensorSpider(scrapy.Spider):
 
     def parse(self, response):
         print('[%s]%s' % (response.status, response.url))
-        self.check(response.url)
+
+        # generate new urls with /dict/suffix.txt
+        for new_url in gen_urls(response.url):
+            # avoid recursive loop
+            yield scrapy.Request(new_url, callback=self.parse_end)
 
         extracted_url = []
-        extracted_url.extend(response.xpath('//*/@href | //*/@src | //form/@action').extract())
+        try:
+            # TODO handle this <a href="/.htaccess">
+            extracted_url.extend(response.xpath('//*/@href | //*/@src | //form/@action').extract())
+        except:
+            return
 
         for url in extracted_url:
             next_url = response.urljoin(url)
             yield scrapy.Request(next_url, callback=self.parse)
 
-    def check(self, url):
-        url = url.split('?')[0]
-        url_piece = url.split('/')
-        if '.' not in url_piece[-1]:
-            return
-        if not urlparse.urlparse(url).path:
-            return
-
-        new_urls = []
-        new_urls.append(url + '~')  # index.php~
-        new_urls.append('/'.join(url_piece[:-1]) + '/.' + url_piece[-1] + '.swp')  # .index.php.swp
-
-        for url in new_urls:
-            r = requests.get(url)
-            if r.status_code != 404:
-                print('[%s]%s' % (r.status_code, url))
+    def parse_end(self, response):
+        print('[Found!][%s]%s' % (response.status, response.url))

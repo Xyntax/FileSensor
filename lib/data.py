@@ -4,3 +4,4 @@
 from datatype import AttribDict
 
 spider_conf = AttribDict()
+dict_data = AttribDict()

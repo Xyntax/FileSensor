@@ -1,0 +1,15 @@
+~
+-
+_
+__
+_bak
+_old
+_new
+.bak
+.zip
+.rar
+.tar.gz
+.tar.xz
+.7z
+.old
+.new
