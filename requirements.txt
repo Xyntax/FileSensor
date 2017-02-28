@@ -1,2 +1,8 @@
 scrapy
 docopt
+twisted
+lxml
+parsel
+w3lib
+cryptography
+pyopenssl

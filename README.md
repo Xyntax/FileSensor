@@ -27,6 +27,8 @@ Install
 2. `cd FileSensor`
 3. `pip3 install -r requirement.txt`
 
+* [Scrapy official installation guide](http://scrapy.readthedocs.io/en/latest/intro/install.html)
+
 Usage
 -----
 ```
