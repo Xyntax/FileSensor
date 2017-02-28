@@ -3,7 +3,7 @@
 **Dynamic file detection tool based on crawler**  
 基于爬虫的动态敏感文件探测工具  
 
-![banner](http://static.cdxy.me/Screenshot%20from%202017-02-28%2015-04-25.png)
+![banner](http://static.cdxy.me/Screenshot-banner-filesensor.png)
 
 Feature
 -------
@@ -23,9 +23,9 @@ Requirement
 
 Install
 -------
-1. git clone https://github.com/Xyntax/FileSensor
-2. cd FileSensor
-3. pip3 install -r requirement.txt
+1. `git clone https://github.com/Xyntax/FileSensor`
+2. `cd FileSensor`
+3. `pip3 install -r requirement.txt`
 
 Usage
 -----
