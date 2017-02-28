@@ -1,5 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# project = https://github.com/Xyntax/FileSensor
+# author = i@cdxy.me
+
 import copy
 import types
 

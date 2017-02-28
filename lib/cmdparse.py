@@ -1,16 +1,25 @@
+# -*- coding: utf-8 -*-
+# project = https://github.com/Xyntax/FileSensor
+# author = i@cdxy.me
+
 """
-FileSensor version 0.1 by Xyntax@github.com
+FileSensor ver0.2 by <i@cdxy.me>
+https://github.com/Xyntax/FileSensor
 
 Usage:
-  filesensor.py URL
-  filesensor.py (-u URL | -f FILE)
+  filesensor.py URL [--404 REGEX] [-o]
   filesensor.py (-h | --help)
 
+Example:
+  python3 filesensor.py https://www.cdxy.me --404 "404 File not Found!"
+
 Options:
-  -u URL       start with url
-  -f FILE      load url from file
+  -o           save results in ./output folder
+  --404 REGEX  filter out custom 404 page with regex
   -h --help    show this help message
+
 """
+
 from docopt import docopt
 
 
