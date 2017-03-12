@@ -47,9 +47,10 @@ def gen_urls(base_url):
 
     final_urls = []
 
-    # index.php -> .index.php.swp
+    # .index.php.swp .index.php.un~
     url_piece = url.split('/')
     final_urls.append('/'.join(url_piece[:-1]) + '/.' + url_piece[-1].strip('.') + '.swp')
+    final_urls.append('/'.join(url_piece[:-1]) + '/.' + url_piece[-1].strip('.') + '.un~')
 
     for each in dict_data.url_suffix:
         final_urls.append(url + each)

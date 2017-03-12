@@ -26,3 +26,8 @@ _old
 .old
 _new
 .new
+.swo
+.swp
+.save
+_save
+s
