@@ -41,19 +41,36 @@ def load_dict_suffix():
 
 
 def gen_urls(base_url):
+    def _split_filename(filename):
+
+        full_filename = filename.rstrip('.')
+        extension = full_filename.split('.')[-1]
+        name = '.'.join(full_filename.split('.')[:-1])
+
+        return name, extension
+
     url = base_url.split('?')[0].rstrip('/')
     if not urlparse(url).path:
         return []
 
+    path = '/'.join(url.split('/')[:-1])
+    filename = url.split('/')[-1]
+
+    # Check if target CMS uses route instead of static file
+    isfile = True if '.' in filename else False
+
+    if isfile:
+        name, extension = _split_filename(filename)
+
     final_urls = []
-
-    # .index.php.swp .index.php.un~
-    url_piece = url.split('/')
-    final_urls.append('/'.join(url_piece[:-1]) + '/.' + url_piece[-1].strip('.') + '.swp')
-    final_urls.append('/'.join(url_piece[:-1]) + '/.' + url_piece[-1].strip('.') + '.un~')
-
     for each in dict_data.url_suffix:
-        final_urls.append(url + each)
+        new_filename = path + '/' + each.replace('{FULL}', filename)
+        if isfile:
+            new_filename = new_filename.replace('{NAME}', name).replace('{EXT}', extension)
+        else:
+            if '{NAME}' in each or '{EXT}' in each:
+                continue
+        final_urls.append(new_filename.replace('..', '.'))
 
     return final_urls
 
