@@ -25,7 +25,7 @@ Install
 -------
 1. `git clone https://github.com/Xyntax/FileSensor`
 2. `cd FileSensor`
-3. `pip3 install -r requirement.txt`
+3. `pip3 install -r requirements.txt`
 
 * [Scrapy official installation guide](http://scrapy.readthedocs.io/en/latest/intro/install.html)
 
